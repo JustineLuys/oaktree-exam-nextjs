@@ -2,7 +2,7 @@ import AddItemDialog from '@/components/dialog/AddItemDialog'
 import ItemsList from '@/components/list/ItemsList'
 import Sidebar from '@/components/Sidebar'
 import React, { Suspense } from 'react'
-
+export const dynamic = 'force-dynamic'
 const HomePage = () => {
   return (
     <>
