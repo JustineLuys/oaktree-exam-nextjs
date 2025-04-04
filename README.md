@@ -27,4 +27,4 @@
 
 git clone https://github.com/JustineLuys/oaktree-exam-nextjs.git
 cd oaktree-exam-nextjs
-npm install
+npm install, npm run dev
