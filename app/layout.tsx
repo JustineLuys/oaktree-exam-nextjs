@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: 'Oaktree App',
@@ -14,10 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased h-[100vh]`}>
-        {children}
-        <Toaster richColors={true} position="top-right" duration={3000} />
-      </body>
+      <body className={`antialiased h-[100vh]`}>{children}</body>
     </html>
   )
 }
