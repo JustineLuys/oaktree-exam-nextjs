@@ -27,4 +27,10 @@
 
 git clone https://github.com/JustineLuys/oaktree-exam-nextjs.git
 cd oaktree-exam-nextjs
-npm install, npm run dev
+npm install to install dependencies,
+npm run dev to run the app
+
+## Server Actions
+
+Server actions are used to communicate to the backend API (Python Fast API) to
+maximize the use of revalidatePath and redirection

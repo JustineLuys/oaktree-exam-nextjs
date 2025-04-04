@@ -21,6 +21,7 @@ export const signup = async (
       error: 'Invalid data',
     }
   }
+  console.log(API_BASE_URL)
 
   const res = await fetch(`${API_BASE_URL}/signup`, {
     method: 'POST',
@@ -100,10 +101,8 @@ export const updateItem = async (
     },
     body: JSON.stringify(itemResult.data),
   })
-  const data = await res.json()
-
   if (!res.ok) {
-    return { error: data.detail }
+    return { error: 'Failed to fetch Item' }
   }
   revalidatePath('/items/[id]', 'page')
 }
@@ -129,10 +128,8 @@ export const addItem = async (
     },
     body: JSON.stringify(result.data),
   })
-  const data = await res.json()
-
   if (!res.ok) {
-    return { error: data.detail }
+    return { error: 'Failed to fetch Item' }
   }
   revalidatePath('/', 'page')
 }
@@ -155,10 +152,8 @@ export const deleteItem = async (
     },
     body: JSON.stringify(result.data),
   })
-  const data = await res.json()
-
   if (!res.ok) {
-    return { error: data.detail }
+    return { error: 'Failed to fetch Item' }
   }
   revalidatePath('/', 'page')
   redirect('/')
