@@ -6,7 +6,7 @@ import DeleteItemDialog from './dialog/DeleteItemDialog'
 const ItemDetails = async ({ id }: { id: number }) => {
   const item = await fetchItem(id)
   if ('error' in item) {
-    return <div>Error: {item.error}</div>
+    return <div className="text-2xl font-semibold">{item.error}</div>
   }
   const { name, description, price } = item
   return (

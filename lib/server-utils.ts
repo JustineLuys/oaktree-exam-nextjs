@@ -14,11 +14,11 @@ export const fetchItem = async (
       Authorization: cookie.value,
     },
   })
-  if (!res.ok) {
-    return { error: 'Failed to fetch Item' }
-  }
 
-  const data: unknown = await res.json()
+  const data = await res.json()
+  if (!res.ok) {
+    return { error: data.detail }
+  }
   const result = apiResponseItemSchema.safeParse(data)
 
   if (!result.success) {
@@ -35,12 +35,11 @@ export const fetchItems = async (): Promise<ErrorApiResponse | Item[]> => {
       Authorization: cookie.value,
     },
   })
-  if (!res.ok) {
-    console.error(`Error: ${res.status} - ${res.statusText}`)
-    return { error: 'Failed to fetch items' }
-  }
 
-  const data: unknown = await res.json()
+  const data = await res.json()
+  if (!res.ok) {
+    return { error: data.detail }
+  }
   const result = apiResponseItemsSchema.safeParse(data)
 
   if (!result.success) {

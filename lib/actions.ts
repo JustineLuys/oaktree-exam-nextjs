@@ -100,8 +100,10 @@ export const updateItem = async (
     },
     body: JSON.stringify(itemResult.data),
   })
+  const data = await res.json()
+
   if (!res.ok) {
-    return { error: 'Failed to fetch Item' }
+    return { error: data.detail }
   }
   revalidatePath('/items/[id]', 'page')
 }
@@ -127,8 +129,10 @@ export const addItem = async (
     },
     body: JSON.stringify(result.data),
   })
+  const data = await res.json()
+
   if (!res.ok) {
-    return { error: 'Failed to fetch Item' }
+    return { error: data.detail }
   }
   revalidatePath('/', 'page')
 }
@@ -151,8 +155,10 @@ export const deleteItem = async (
     },
     body: JSON.stringify(result.data),
   })
+  const data = await res.json()
+
   if (!res.ok) {
-    return { error: 'Failed to fetch Item' }
+    return { error: data.detail }
   }
   revalidatePath('/', 'page')
   redirect('/')
