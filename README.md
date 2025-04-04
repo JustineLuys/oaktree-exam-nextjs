@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌳 Oaktree Exam — Next.js Web Application
 
-## Getting Started
+## 🚀 Tech Stack
 
-First, run the development server:
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4 + `clsx` + `tailwind-merge`
+- **Form Handling**: React Hook Form + Zod Validation
+- **UI Components**: ShadCN UI + Lucide Icons + Sonner for notifications
+- **Authentication**: JWT from FastAPI
+- **Utilities**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+/app/(marketing)/page.tsx → Main Page
+/app/(auth)/... → Auth Page
+/components → Reusable components (Sidebar, Buttons, Dialogs, etc.)
+/lib → Server utility functions (e.g., fetchItems)
+/public → Static assets (images, icons, etc.)
+/styles → Tailwind & global CSS
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📦 Installation
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/JustineLuys/oaktree-exam-nextjs.git
+cd oaktree-exam-nextjs
+npm install
