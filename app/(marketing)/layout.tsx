@@ -8,7 +8,7 @@ const HomeLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <div className="h-full relative">
+    <div className="h-full flex flex-col lg:flex-col xl:flex-row">
       <Sidebar />
       {children}
       <Toaster richColors={true} position="top-right" duration={3000} />

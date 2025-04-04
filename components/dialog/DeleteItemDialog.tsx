@@ -33,7 +33,6 @@ const DeleteItemDialog = ({ id, name }: DeleteItemDialogProps) => {
         toast.error(result.error)
         return
       }
-      toast.success('Item has been deleted')
     })
   }
   return (

@@ -21,7 +21,6 @@ export const signup = async (
       error: 'Invalid data',
     }
   }
-  console.log(API_BASE_URL)
 
   const res = await fetch(`${API_BASE_URL}/signup`, {
     method: 'POST',

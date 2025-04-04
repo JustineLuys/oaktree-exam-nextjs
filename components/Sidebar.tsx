@@ -8,7 +8,7 @@ import SidebarItemsSkeleton from './SidebarItemsSkeleton'
 
 const Sidebar = () => {
   return (
-    <aside className="w-[15%] h-full absolute top-0 left-0 border-r-black/10 border p-2">
+    <aside className="xl:w-[15%]  lg:w-full lg:h-full h-[600px] border-r-black/10 border p-2">
       <nav className="h-full flex flex-col gap-6">
         <Greeting />
         <div className="p-5 pl-5 hover:bg-black/5 rounded-xl cursor-pointer">

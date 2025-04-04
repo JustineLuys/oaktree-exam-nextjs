@@ -49,12 +49,9 @@ const ItemForm = ({
         toast.error(result?.error)
         return
       }
-      setTimeout(
-        () =>
-          toast.success(
-            `The item has been ${action === 'edit' ? 'edited' : 'added'}`
-          ),
-        2000
+
+      toast.success(
+        `The item has been ${action === 'edit' ? 'edited' : 'added'}`
       )
 
       closeDialog()
