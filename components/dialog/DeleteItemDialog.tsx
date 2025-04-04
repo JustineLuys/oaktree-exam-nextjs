@@ -13,6 +13,7 @@ import {
 import { Button } from '../ui/button'
 import { deleteItem } from '@/lib/actions'
 import { toast } from 'sonner'
+import { useGetTransition } from '@/lib/hooks'
 
 interface DeleteItemDialogProps {
   id: number
@@ -20,23 +21,30 @@ interface DeleteItemDialogProps {
 }
 const DeleteItemDialog = ({ id, name }: DeleteItemDialogProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
+  const { pending, startTransition } = useGetTransition()
   const handleCloseDialog = () => {
     setIsOpen(false)
   }
 
-  const handleDeleteItem = async () => {
-    const result = await deleteItem(id)
-    if (result?.error) {
-      toast.error(result.error)
-      return
-    }
-    toast.success('Item has been deleted')
+  const handleDeleteItem = () => {
+    startTransition(async () => {
+      const result = await deleteItem(id)
+      if (result?.error) {
+        toast.error(result.error)
+        return
+      }
+      toast.success('Item has been deleted')
+    })
   }
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive">Delete item</Button>
+        <Button
+          variant="destructive"
+          className="cursor-pointer hover:scale-[1.10]"
+        >
+          Delete item
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] flex flex-col gap-5 p-6">
         <DialogHeader>
@@ -51,6 +59,7 @@ const DeleteItemDialog = ({ id, name }: DeleteItemDialogProps) => {
           <Button
             className="cursor-pointer"
             onClick={() => handleCloseDialog()}
+            disabled={pending}
           >
             Cancel
           </Button>
@@ -58,8 +67,9 @@ const DeleteItemDialog = ({ id, name }: DeleteItemDialogProps) => {
             className="cursor-pointer"
             variant="destructive"
             onClick={handleDeleteItem}
+            disabled={pending}
           >
-            Delete
+            {pending ? 'Deleting item...' : 'Delete'}
           </Button>
         </DialogFooter>
       </DialogContent>

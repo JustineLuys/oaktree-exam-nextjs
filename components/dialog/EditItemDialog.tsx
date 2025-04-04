@@ -27,7 +27,7 @@ const EditItemDialog = ({ name, description, price, id }: EditItemDialog) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Edit item</Button>
+        <Button className="cursor-pointer hover:scale-[1.10]">Edit item</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

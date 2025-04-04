@@ -10,17 +10,19 @@ const ItemDetails = async ({ id }: { id: number }) => {
   }
   const { name, description, price } = item
   return (
-    <div>
-      <h1>{name}</h1>
-      <p>{description}</p>
-      <p>{price}</p>
-      <EditItemDialog
-        name={name}
-        description={description}
-        price={price}
-        id={id}
-      />
-      <DeleteItemDialog name={name} id={id} />
+    <div className="border border-black/20 rounded-xl shadow-2xl h-[400px] w-[400px] flex flex-col items-center justify-center gap-5">
+      <h1 className="text-2xl font-bold">{name}</h1>
+      <p className="text-xl">{description}</p>
+      <p className="text-lg text-black/50">${price}</p>
+      <div className="space-x-4 mt-7">
+        <DeleteItemDialog name={name} id={id} />
+        <EditItemDialog
+          name={name}
+          description={description}
+          price={price}
+          id={id}
+        />
+      </div>
     </div>
   )
 }

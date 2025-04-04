@@ -28,7 +28,8 @@ const AddItemDialog = () => {
           <DialogTitle>Add item</DialogTitle>
           <DialogDescription>
             Fill in the details of the item {"you'd"} like to add. Once{' '}
-            {"you're"} finished, click {`"Save"`} to add it to your collection.
+            {"you're"} finished, click {`"Add item"`} to add it to your
+            collection.
           </DialogDescription>
         </DialogHeader>
         <ItemForm action="add" closeDialog={handleCloseDialog} />

@@ -27,7 +27,7 @@ const ItemPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = +(await params).id
 
   return (
-    <main className="h-full w-[calc(100vw-15%)] absolute top-0 right-0">
+    <main className="h-full w-[calc(100vw-15%)] absolute top-0 right-0 flex items-center justify-center">
       <Suspense fallback="Loading..">
         <ItemDetails id={id} />
       </Suspense>

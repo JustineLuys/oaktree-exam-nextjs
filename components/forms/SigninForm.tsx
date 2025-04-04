@@ -8,24 +8,24 @@ import { signinEntrySchema } from '@/lib/schema'
 import { SigninEntry } from '@/lib/types'
 import { signin } from '@/lib/actions'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useGetTransition } from '@/lib/hooks'
 
 const SigninForm = () => {
-  const router = useRouter()
+  const { pending, startTransition } = useGetTransition()
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<SigninEntry>({ resolver: zodResolver(signinEntrySchema) })
 
-  const onSubmit = async (formData: SigninEntry) => {
-    const result = await signin(formData)
-    if ('error' in result) {
-      toast.error(result.error)
-      return
-    }
-    toast.success(result.success)
-    router.push('/')
+  const onSubmit = (formData: SigninEntry) => {
+    startTransition(async () => {
+      const result = await signin(formData)
+      if ('error' in result) {
+        toast.error(result.error)
+        return
+      }
+    })
   }
   return (
     <form
@@ -34,7 +34,12 @@ const SigninForm = () => {
     >
       <div className="space-y-2 w-[80%]">
         <Label htmlFor="username">Username: </Label>
-        <Input id="username" type="text" {...register('username')} />
+        <Input
+          id="username"
+          type="text"
+          {...register('username')}
+          disabled={pending}
+        />
         {errors.username && (
           <p className="text-red-500 text-xs italic">
             {errors.username.message}
@@ -43,14 +48,21 @@ const SigninForm = () => {
       </div>
       <div className="space-y-2 w-[80%]">
         <Label htmlFor="password">Password: </Label>
-        <Input id="password" type="password" {...register('password')} />
+        <Input
+          id="password"
+          type="password"
+          {...register('password')}
+          disabled={pending}
+        />
         {errors.password && (
           <p className="text-red-500 text-xs italic">
             {errors.password.message}
           </p>
         )}
       </div>
-      <Button className="cursor-pointer w-[80%]">Sign in</Button>
+      <Button className="cursor-pointer w-[80%]" disabled={pending}>
+        {pending ? 'Signing in...' : 'Sign in'}
+      </Button>
     </form>
   )
 }

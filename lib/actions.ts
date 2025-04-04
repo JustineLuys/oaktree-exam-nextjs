@@ -9,7 +9,8 @@ import {
 } from './schema'
 import { ErrorApiResponse, SuccessSignupResponse } from './types'
 import { redirect } from 'next/navigation'
-import { deleteCookies, saveTokenToCookies } from './auth'
+import { deleteCookies, getCookies, saveTokenToCookies } from './auth'
+import { API_BASE_URL } from './server-utils'
 
 export const signup = async (
   formData: unknown
@@ -20,8 +21,9 @@ export const signup = async (
       error: 'Invalid data',
     }
   }
+  console.log(API_BASE_URL)
 
-  const res = await fetch('http://localhost:8000/signup', {
+  const res = await fetch(`${API_BASE_URL}/signup`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -56,7 +58,7 @@ export const signin = async (
   body.append('username', result.data.username)
   body.append('password', result.data.password)
 
-  const res = await fetch('http://localhost:8000/signin', {
+  const res = await fetch(`${API_BASE_URL}/signin`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/x-www-form-urlencoded',
@@ -70,9 +72,7 @@ export const signin = async (
     }
   }
   await saveTokenToCookies(data.access_token)
-  return {
-    success: 'You have logged in successfully',
-  }
+  redirect('/')
 }
 
 export const signout = async () => {
@@ -91,12 +91,12 @@ export const updateItem = async (
       error: 'Invalid data',
     }
   }
+  const cookies = await getCookies()
 
-  const res = await fetch(`http://localhost:8000/api/items/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/api/items/${id}`, {
     method: 'PUT',
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5lenhjMSIsImlkIjoyLCJleHAiOjE3NDYyNzYwMjJ9.Afi_fjRsAskgAVwSkHPnMmonXQjN57dkv8HrudRKocQ',
+      Authorization: cookies.value,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(itemResult.data),
@@ -118,11 +118,12 @@ export const addItem = async (
     }
   }
 
-  const res = await fetch(`http://localhost:8000/api/items`, {
+  const cookies = await getCookies()
+
+  const res = await fetch(`${API_BASE_URL}/api/items`, {
     method: 'POST',
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5lenhjMSIsImlkIjoyLCJleHAiOjE3NDYyNzYwMjJ9.Afi_fjRsAskgAVwSkHPnMmonXQjN57dkv8HrudRKocQ',
+      Authorization: cookies.value,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(result.data),
@@ -142,11 +143,12 @@ export const deleteItem = async (
       error: 'Invalid data',
     }
   }
-  const res = await fetch(`http://localhost:8000/api/items/${result.data}`, {
+  const cookies = await getCookies()
+
+  const res = await fetch(`${API_BASE_URL}/api/items/${result.data}`, {
     method: 'DELETE',
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5lenhjMSIsImlkIjoyLCJleHAiOjE3NDYyNzYwMjJ9.Afi_fjRsAskgAVwSkHPnMmonXQjN57dkv8HrudRKocQ',
+      Authorization: cookies.value,
     },
     body: JSON.stringify(result.data),
   })

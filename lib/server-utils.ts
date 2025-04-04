@@ -1,15 +1,17 @@
 import 'server-only'
 import { apiResponseItemSchema, apiResponseItemsSchema } from './schema'
 import { ErrorApiResponse, Item } from './types'
+import { getCookies } from './auth'
 
-const API_BASE_URL = process.env.API_BASE_URL
+export const API_BASE_URL = process.env.API_BASE_URL
+
 export const fetchItem = async (
   id: number
 ): Promise<ErrorApiResponse | Item> => {
+  const cookie = await getCookies()
   const res = await fetch(`${API_BASE_URL}/api/items/${id}`, {
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5lenhjMSIsImlkIjoyLCJleHAiOjE3NDYyNzYwMjJ9.Afi_fjRsAskgAVwSkHPnMmonXQjN57dkv8HrudRKocQ',
+      Authorization: cookie.value,
     },
   })
   if (!res.ok) {
@@ -27,10 +29,10 @@ export const fetchItem = async (
 }
 
 export const fetchItems = async (): Promise<ErrorApiResponse | Item[]> => {
+  const cookie = await getCookies()
   const res = await fetch(`${API_BASE_URL}/api/items`, {
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdXN0aW5lenhjMSIsImlkIjoyLCJleHAiOjE3NDYyNzYwMjJ9.Afi_fjRsAskgAVwSkHPnMmonXQjN57dkv8HrudRKocQ',
+      Authorization: cookie.value,
     },
   })
   if (!res.ok) {

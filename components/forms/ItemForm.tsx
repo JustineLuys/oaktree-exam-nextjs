@@ -7,6 +7,7 @@ import { itemEntrySchema } from '@/lib/schema'
 import { ItemEntry } from '@/lib/types'
 import { addItem, updateItem } from '@/lib/actions'
 import { toast } from 'sonner'
+import { useGetTransition } from '@/lib/hooks'
 
 interface ItemFormProps {
   action: 'edit' | 'add'
@@ -24,7 +25,7 @@ const ItemForm = ({
   price,
   closeDialog,
 }: ItemFormProps) => {
-  
+  const { pending, startTransition } = useGetTransition()
   const {
     register,
     formState: { errors },
@@ -38,17 +39,26 @@ const ItemForm = ({
     },
   })
 
-  const onSubmit = async (formData: ItemEntry) => {
-    const result =
-      action === 'edit'
-        ? await updateItem(formData, id)
-        : await addItem(formData)
-    if (result?.error) {
-      toast.error(result?.error)
-      return
-    }
-    toast.success(`The item has been ${action === 'edit' ? 'edited' : 'added'}`)
-    closeDialog()
+  const onSubmit = (formData: ItemEntry) => {
+    startTransition(async () => {
+      const result =
+        action === 'edit'
+          ? await updateItem(formData, id)
+          : await addItem(formData)
+      if (result?.error) {
+        toast.error(result?.error)
+        return
+      }
+      setTimeout(
+        () =>
+          toast.success(
+            `The item has been ${action === 'edit' ? 'edited' : 'added'}`
+          ),
+        2000
+      )
+
+      closeDialog()
+    })
   }
 
   return (
@@ -82,7 +92,15 @@ const ItemForm = ({
           <p className="text-red-500 text-xs italic">{errors.price.message}</p>
         )}
       </div>
-      <Button>{action === 'add' ? 'Add item' : 'Save changes'}</Button>
+      <Button disabled={pending}>
+        {action === 'add'
+          ? pending
+            ? 'Adding item...'
+            : 'Add item'
+          : pending
+          ? 'Saving changes...'
+          : 'Save changes'}
+      </Button>
     </form>
   )
 }
