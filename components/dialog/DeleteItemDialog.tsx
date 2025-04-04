@@ -14,12 +14,14 @@ import { Button } from '../ui/button'
 import { deleteItem } from '@/lib/actions'
 import { toast } from 'sonner'
 import { useGetTransition } from '@/lib/hooks'
+import { useRouter } from 'next/navigation'
 
 interface DeleteItemDialogProps {
   id: number
   name: string
 }
 const DeleteItemDialog = ({ id, name }: DeleteItemDialogProps) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const { pending, startTransition } = useGetTransition()
   const handleCloseDialog = () => {
@@ -33,6 +35,9 @@ const DeleteItemDialog = ({ id, name }: DeleteItemDialogProps) => {
         toast.error(result.error)
         return
       }
+      handleCloseDialog()
+      toast.success('Item has been deleted')
+      router.push('/')
     })
   }
   return (

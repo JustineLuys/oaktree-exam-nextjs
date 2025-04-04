@@ -14,5 +14,9 @@ export interface ErrorApiResponse {
 export interface SuccessSignupResponse {
   success: string
 }
+
+export interface SuccessSigninResponse {
+  success: string
+}
 export type SignupEntry = z.infer<typeof signupEntrySchema>
 export type SigninEntry = z.infer<typeof signinEntrySchema>

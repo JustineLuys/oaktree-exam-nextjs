@@ -9,8 +9,10 @@ import { SigninEntry } from '@/lib/types'
 import { signin } from '@/lib/actions'
 import { toast } from 'sonner'
 import { useGetTransition } from '@/lib/hooks'
+import { useRouter } from 'next/navigation'
 
 const SigninForm = () => {
+  const router = useRouter()
   const { pending, startTransition } = useGetTransition()
   const {
     register,
@@ -25,6 +27,7 @@ const SigninForm = () => {
         toast.error(result.error)
         return
       }
+      router.push('/')
     })
   }
   return (
