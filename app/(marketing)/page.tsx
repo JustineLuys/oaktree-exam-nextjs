@@ -2,7 +2,6 @@ import AddItemDialog from '@/components/dialog/AddItemDialog'
 import ItemsList from '@/components/list/ItemsList'
 import PageItemsListSkeleton from '@/components/PageItemsListSkeleton'
 import { Suspense } from 'react'
-export const dynamic = 'force-dynamic'
 
 const HomePage = () => {
   return (

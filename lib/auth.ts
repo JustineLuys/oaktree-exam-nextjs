@@ -5,7 +5,13 @@ import { cache } from 'react'
 
 export const saveTokenToCookies = async (token: string) => {
   const cookieStore = await cookies()
-  cookieStore.set('__items_app__', `Bearer ${token}`)
+  cookieStore.set('__items_app__', `Bearer ${token}`, {
+    httpOnly: true,
+    secure: true,
+    maxAge: 60 * 60 * 24 * 30,
+    path: '/',
+    sameSite: 'lax',
+  })
 }
 
 export const deleteCookies = async () => {
